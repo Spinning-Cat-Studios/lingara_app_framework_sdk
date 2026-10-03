@@ -1,0 +1,14 @@
+id: ak2.unknown-slice-kind-skipped
+behaviours: [AK2]
+request:
+  operation: app.render
+  body:
+    raw: '{"type":"app.render","id":"lgr_msg_00000000000000000000000000000000","install_id":"7c1d2e3f-4a5b-4c6d-8e7f-9a0b1c2d3e4f","subject":"lgr_sub_conformance","slot":"plans.empty_detail","locale":"ja","context":[{"kind":"languages","source_lang":"en","target_lang":"ja","level":3},{"kind":"weather","sky":"clear"}]}'
+expect:
+  status: 200
+  body:
+    json:
+      card:
+        elements:
+          - { type: heading, text: plans.empty_detail, level: 1 }
+          - { type: text, text: languages }

@@ -1,0 +1,9 @@
+# The three app unions and their arms are ruby/codegen/generate.rb's, not
+# openapi-generator's (ADR 30.9.26am D6). One glob per union covers the union
+# file and every `<union>_<tag>` arm file. The leading `**/` is the pin's
+# price: it matches the root-relative lib/lingara-apps/models/<file>.
+# generate.rb refuses a models directory holding any of these names, so a
+# fourth union this file does not name fails codegen-ruby.
+**/models/card_element*.rb
+**/models/list_item*.rb
+**/models/context_slice*.rb

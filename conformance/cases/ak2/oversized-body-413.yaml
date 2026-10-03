@@ -1,0 +1,9 @@
+id: ak2.oversized-body-413
+behaviours: [AK2]
+request:
+  body:
+    raw_pad:
+      json: { type: app.render, id: lgr_msg_00000000000000000000000000000000 }
+      to_bytes: 65537
+expect:
+  status: 413

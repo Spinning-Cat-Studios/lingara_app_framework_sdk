@@ -1,0 +1,69 @@
+# languages.toml — what a release publishes (ADR 30.9.26am D8, in the clients'
+# schema). tools/release-manifest reads it; make/release.mk installs that tool
+# from the public lingara_api_clients repository at a pinned tag.
+#
+# One [[language]] per kit a release ships. A kit joins in the commit that
+# lands it, with `since = "next"`; `make bump-version` writes the version.
+#
+# Write each `id` on its own line, `id = "<id>"`, with nothing after it: that
+# makes this list readable with grep -E '^id = "[a-z]+"$' as well as a TOML
+# parser, and `check` refuses any other spelling.
+
+[[language]]
+id = "typescript"
+registry = "npm"
+package = "@lingara/apps"
+version_files = [
+  { path = "typescript/package.json", kind = "json", keys = ["/version"] },
+  { path = "typescript/package-lock.json", kind = "json", keys = ["/version", "/packages//version"] },
+]
+artefact = { built = "typescript/lingara-apps-{semver}.tgz", uploaded = "lingara-apps-typescript-{version}.tgz" }
+since = "0.1.0-alpha.1"
+
+[[language]]
+id = "rust"
+registry = "crates.io"
+package = "lingara-apps"
+version_files = [{ path = "rust/Cargo.toml", kind = "toml", keys = ["package.version"] }]
+artefact = { built = "target/package/lingara-apps-{semver}.crate", uploaded = "lingara-apps-rust-{version}.crate" }
+since = "0.1.0-alpha.1"
+
+# Versioned by tag alone: go/vX.Y.Z beside vX.Y.Z.
+[[language]]
+id = "go"
+registry = "go"
+package = "github.com/Spinning-Cat-Studios/lingara_app_framework_sdk/go"
+since = "0.1.0-alpha.1"
+
+# Versioned from VERSION by the shared Gradle root; Central serves the signed
+# bundle, so no artefact. Gradle has no settings file inside java/, so
+# `manifest` names the root one publish/snapshot.toml reads.
+[[language]]
+id = "java"
+registry = "maven-central"
+package = "com.getlingara:lingara-apps-java"
+manifest = "settings.gradle.kts"
+since = "0.1.0-alpha.1"
+
+[[language]]
+id = "kotlin"
+registry = "maven-central"
+package = "com.getlingara:lingara-apps-kotlin"
+manifest = "settings.gradle.kts"
+since = "0.1.0-alpha.1"
+
+# version.rb is generated from VERSION by make codegen-ruby, so no
+# version_files; RubyGems serves the gem, so no artefact.
+[[language]]
+id = "ruby"
+registry = "rubygems"
+package = "lingara-apps"
+since = "0.1.0-alpha.1"
+
+# Packagist reads git through the lingara-apps-php split mirror of php/, so it
+# is versioned by tag alone.
+[[language]]
+id = "php"
+registry = "packagist"
+package = "spinningcatstudios/lingara-apps"
+since = "0.1.0-alpha.1"

@@ -1,0 +1,62 @@
+{
+  "name": "@lingara/apps",
+  "version": "0.1.0-alpha.3",
+  "description": "The official Lingara app kit for Node: verify, dispatch and answer Lingara's signed app requests with a card.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Spinning-Cat-Studios/lingara_app_framework_sdk.git",
+    "directory": "typescript"
+  },
+  "homepage": "https://getlingara.com/docs/apps/",
+  "keywords": [
+    "lingara",
+    "apps",
+    "language-learning",
+    "webhooks"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "codegen": "openapi-typescript ../spec/generator/apps.3.1.json -o src/generated/schema.ts && node scripts/codegenApps.mjs ../spec/generator/apps.3.1.json src/generated/schema.ts src/generated/apps.ts",
+    "check": "eslint . && tsc --noEmit"
+  },
+  "dependencies": {
+    "@lingara/api": "^0.1.0-alpha.10"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.20.4",
+    "eslint": "^10.11.0",
+    "openapi-typescript": "7.13.0",
+    "publint": "^0.3.24",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.71.0",
+    "vitest": "^3.2.7"
+  }
+}

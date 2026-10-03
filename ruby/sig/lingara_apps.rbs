@@ -1,0 +1,346 @@
+# The public surface of the gem `lingara-apps` (ADR 30.9.26am). The
+# library's own types (Lingara::Events::Webhook and its error) are the
+# `lingara` gem's signatures, so they are untyped here.
+module Lingara
+  module Apps
+    VERSION: String
+    GEM_VERSION: String
+    GENERATED_FROM: String
+    CONTEXT_SLICE_KINDS: Array[String]
+
+    type wire = Hash[String, untyped]
+    type reply = Card | Reply
+
+    interface _Logger
+      def warn: (String message) -> untyped
+    end
+
+    # The generated models (openapi-generator, models only).
+    class AppRenderRequest
+      attr_accessor type: String
+      attr_accessor id: String
+      attr_accessor install_id: String
+      attr_accessor subject: String
+      attr_accessor slot: String
+      attr_accessor locale: String
+      attr_accessor context: Array[ContextSlice]
+      def self.build_from_hash: (Hash[untyped, untyped] attributes) -> AppRenderRequest?
+    end
+
+    class AppActionRequest
+      attr_accessor type: String
+      attr_accessor id: String
+      attr_accessor install_id: String
+      attr_accessor subject: String
+      attr_accessor slot: String
+      attr_accessor locale: String
+      attr_accessor context: Array[ContextSlice]
+      attr_accessor action_id: String
+      attr_accessor card_etag: String
+      def self.build_from_hash: (Hash[untyped, untyped] attributes) -> AppActionRequest?
+    end
+
+    class Card
+      attr_accessor elements: Array[CardElement]
+      def initialize: (?Hash[Symbol, untyped] attributes) -> void
+    end
+
+    class AppSlotName
+      PLANS_EMPTY_DETAIL: String
+      HOME_SIDE: String
+      UNKNOWN_DEFAULT_OPEN_API: String
+      def self.all_vars: () -> Array[String]
+    end
+
+    class ButtonStyle
+      PRIMARY: String
+      SECONDARY: String
+    end
+
+    # The unions and their arms (ruby/codegen/generate.rb). Each arm is a
+    # Data class with its view members; `to_wire` writes its JSON object.
+    module Unions
+      def self.wire: (String tag, String value, Hash[Symbol, untyped] members) -> wire
+      def self.members: (untyped arm, Hash[String, untyped] fields) -> Hash[Symbol, untyped]
+    end
+
+    interface _Arm
+      def to_wire: () -> wire
+    end
+
+    module CardElement : _Arm
+      TAG: String
+      ARMS: Hash[String, untyped]
+      def self.decode: (Hash[String, untyped] fields) -> CardElement?
+    end
+
+    module ListItem : _Arm
+      TAG: String
+      ARMS: Hash[String, untyped]
+      def self.decode: (Hash[String, untyped] fields) -> ListItem?
+    end
+
+    module ContextSlice : _Arm
+      TAG: String
+      ARMS: Hash[String, untyped]
+      def self.decode: (Hash[String, untyped] fields) -> ContextSlice?
+      def kind: () -> String
+    end
+
+    # The arms: Data classes, each including its union.
+    class ContextSliceLanguages < Data
+      include ContextSlice
+      attr_reader source_lang: String
+      attr_reader target_lang: String
+      attr_reader level: Integer?
+      def kind: () -> String
+      def to_wire: () -> wire
+      def self.from_wire: (Hash[String, untyped] fields) -> ContextSliceLanguages
+    end
+
+    class ContextSlicePlanSummary < Data
+      include ContextSlice
+      attr_reader plan_id: String
+      attr_reader title: String?
+      attr_reader target_lang: String
+      attr_reader set_count: Integer
+      attr_reader sets_completed: Integer
+      def kind: () -> String
+      def to_wire: () -> wire
+      def self.from_wire: (Hash[String, untyped] fields) -> ContextSlicePlanSummary
+    end
+
+    class ContextSliceReviewDue < Data
+      include ContextSlice
+      attr_reader due: Integer
+      attr_reader learned: Integer
+      def kind: () -> String
+      def to_wire: () -> wire
+      def self.from_wire: (Hash[String, untyped] fields) -> ContextSliceReviewDue
+    end
+
+    class ContextSliceTutorTopic < Data
+      include ContextSlice
+      attr_reader topic: String
+      def kind: () -> String
+      def to_wire: () -> wire
+      def self.from_wire: (Hash[String, untyped] fields) -> ContextSliceTutorTopic
+    end
+
+    class CardElementHeading < Data
+      include CardElement
+      attr_reader text: String
+      attr_reader level: Integer
+      def type: () -> String
+      def to_wire: () -> wire
+      def self.from_wire: (Hash[String, untyped] fields) -> CardElementHeading
+    end
+
+    class CardElementText < Data
+      include CardElement
+      attr_reader text: String
+      attr_reader lang: String?
+      def type: () -> String
+      def to_wire: () -> wire
+      def self.from_wire: (Hash[String, untyped] fields) -> CardElementText
+    end
+
+    class CardElementTerm < Data
+      include CardElement
+      attr_reader word: String
+      attr_reader reading: String?
+      attr_reader gloss: String?
+      attr_reader lang: String?
+      def type: () -> String
+      def to_wire: () -> wire
+      def self.from_wire: (Hash[String, untyped] fields) -> CardElementTerm
+    end
+
+    class CardElementList < Data
+      include CardElement
+      attr_reader items: Array[ListItem]
+      def type: () -> String
+      def to_wire: () -> wire
+      def self.from_wire: (Hash[String, untyped] fields) -> CardElementList
+    end
+
+    class CardElementProgress < Data
+      include CardElement
+      attr_reader value: Float
+      attr_reader label: String
+      def type: () -> String
+      def to_wire: () -> wire
+      def self.from_wire: (Hash[String, untyped] fields) -> CardElementProgress
+    end
+
+    class CardElementDivider < Data
+      include CardElement
+      def type: () -> String
+      def to_wire: () -> wire
+      def self.from_wire: (Hash[String, untyped] fields) -> CardElementDivider
+    end
+
+    class CardElementButton < Data
+      include CardElement
+      attr_reader label: String
+      attr_reader action: String
+      attr_reader style: String?
+      def type: () -> String
+      def to_wire: () -> wire
+      def self.from_wire: (Hash[String, untyped] fields) -> CardElementButton
+    end
+
+    class CardElementLink < Data
+      include CardElement
+      attr_reader label: String
+      attr_reader url: String
+      def type: () -> String
+      def to_wire: () -> wire
+      def self.from_wire: (Hash[String, untyped] fields) -> CardElementLink
+    end
+
+    class ListItemText < Data
+      include ListItem
+      attr_reader text: String
+      attr_reader lang: String?
+      def type: () -> String
+      def to_wire: () -> wire
+      def self.from_wire: (Hash[String, untyped] fields) -> ListItemText
+    end
+
+    class ListItemTerm < Data
+      include ListItem
+      attr_reader word: String
+      attr_reader reading: String?
+      attr_reader gloss: String?
+      attr_reader lang: String?
+      def type: () -> String
+      def to_wire: () -> wire
+      def self.from_wire: (Hash[String, untyped] fields) -> ListItemTerm
+    end
+
+    module Operations
+      RENDER: String
+      ACTION: String
+      REQUESTS: Hash[String, String]
+      REPLY: String
+    end
+
+    class CardLimitError < StandardError
+      attr_reader reason: Symbol
+      def initialize: (Symbol reason) -> void
+    end
+
+    module Limits
+      REPLY_MAX_BYTES: Integer
+      REQUEST_MAX_BYTES: Integer
+      MAX_ELEMENTS: Integer
+      MAX_BUTTONS: Integer
+      MAX_LIST_ITEMS: Integer
+      TUTOR_NOTE_MAX_CHARS: Integer
+      MAX_URL_BYTES: Integer
+      HEADING_MAX_CHARS: Integer
+      TEXT_MAX_CHARS: Integer
+      TERM_WORD_MAX_CHARS: Integer
+      TERM_READING_MAX_CHARS: Integer
+      TERM_GLOSS_MAX_CHARS: Integer
+      PROGRESS_LABEL_MAX_CHARS: Integer
+      BUTTON_LABEL_MAX_CHARS: Integer
+      LINK_LABEL_MAX_CHARS: Integer
+      LANG_PATTERN: Regexp
+      ACTION_PATTERN: Regexp
+      REASONS: Array[Symbol]
+
+      def self.trim: (String text) -> String
+      def self.control?: (String text, bool newline) -> bool
+      def self.truncate: (String text, Integer limit) -> String
+      def self.safe_link?: (String raw) -> bool
+      def self.validate_reply: (untyped reply) -> String
+      def self.check_card: (untyped card) -> void
+      def self.check_tutor_note: (String note) -> void
+    end
+
+    module Item
+      def self.text: (String text, ?lang: String?) -> ListItem
+      def self.term: (word: String, ?reading: String?, ?gloss: String?, ?lang: String?) -> ListItem
+    end
+
+    class CardBuilder
+      def heading: (String text, ?Integer level) -> self
+      def text: (String text, ?lang: String?) -> self
+      def term: (word: String, ?reading: String?, ?gloss: String?, ?lang: String?) -> self
+      def list: (Array[ListItem] items) -> self
+      def progress: (Float | Integer value, String label) -> self
+      def divider: () -> self
+      def button: (String label, String action, ?style: String?) -> self
+      def link: (String label, String url) -> self
+      def build: () -> Card
+    end
+
+    class Reply
+      attr_reader card: Card
+      def initialize: (Card card) -> void
+      def tutor_note: (String text) -> self
+                    | () -> String?
+      def to_wire: () -> wire
+    end
+
+    class ManifestError < StandardError
+      attr_reader rule: Symbol
+      def initialize: (Symbol rule) -> void
+    end
+
+    module ManifestRules
+      NAME_MAX_CHARS: Integer
+      DESCRIPTION_MAX_CHARS: Integer
+      STORED_MAX_BYTES: Integer
+      RULES: Array[Symbol]
+      SLOT_NAMES: Array[String]
+      def self.first_broken: (untyped manifest) -> Symbol?
+    end
+
+    class ManifestBuilder
+      type localized = String | Hash[String, String]
+
+      def default_locale: (String locale) -> self
+      def name: (localized name) -> self
+      def description: (localized description) -> self
+      def render_url: (String url) -> self
+      def slots: (*String slots) -> self
+      def context: (*String kinds) -> self
+      def scopes: (*String scopes) -> self
+      def tutor_note: (?bool enabled) -> self
+      def listed: (?bool listed) -> self
+      def build: () -> wire
+      def to_json: (*untyped) -> String
+    end
+
+    class App
+      DISPATCH: Hash[String, Symbol]
+      attr_reader webhook: untyped
+      def initialize: (secret: String | Array[String], ?logger: _Logger) -> void
+      def render: () { (AppRenderRequest request) -> reply } -> self
+      def action: (String | Symbol id) { (AppActionRequest request) -> reply } -> self
+      def handle: (String? method, Hash[String, untyped] headers, ^(Integer) -> String) -> [Integer, Hash[String, String], String]
+    end
+
+    class Decoder
+      def initialize: (_Logger logger) -> void
+      def decode: (String body) -> (AppRenderRequest | AppActionRequest)?
+    end
+
+    class RackApp
+      def initialize: (App app) -> void
+      def call: (Hash[String, untyped] env) -> [Integer, Hash[String, String], Array[String]]
+    end
+
+    def self.card: () -> CardBuilder
+    def self.item: () -> singleton(Item)
+    def self.reply: (Card card) -> Reply
+    def self.card_wire: (Card card) -> wire
+    def self.truncate: (String text, Integer limit) -> String
+    def self.validate_reply: (untyped reply) -> String
+    def self.manifest: () -> ManifestBuilder
+    def self.validate_manifest: (untyped manifest) -> void
+  end
+end

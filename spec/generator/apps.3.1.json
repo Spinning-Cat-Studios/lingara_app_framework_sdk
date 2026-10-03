@@ -1,0 +1,637 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Lingara apps",
+    "version": "2026-10-affable-towhee",
+    "x-lingara-view": {
+      "source": "backend@43259e6fb944ab0c816525aee47c0598af8b9503",
+      "from": "asyncapi 3.0"
+    }
+  },
+  "paths": {},
+  "components": {
+    "schemas": {
+      "AppRenderRequest": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "install_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "slot": {
+            "$ref": "#/components/schemas/AppSlotName"
+          },
+          "locale": {
+            "type": "string"
+          },
+          "context": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContextSlice"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "id",
+          "install_id",
+          "subject",
+          "slot",
+          "locale",
+          "context"
+        ]
+      },
+      "AppActionRequest": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "install_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "slot": {
+            "$ref": "#/components/schemas/AppSlotName"
+          },
+          "locale": {
+            "type": "string"
+          },
+          "context": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContextSlice"
+            }
+          },
+          "action_id": {
+            "type": "string"
+          },
+          "card_etag": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "id",
+          "install_id",
+          "subject",
+          "slot",
+          "locale",
+          "context",
+          "action_id",
+          "card_etag"
+        ]
+      },
+      "AppSlotName": {
+        "type": "string",
+        "enum": [
+          "plans.empty_detail",
+          "home.side"
+        ]
+      },
+      "ContextSlice": {
+        "type": "object"
+      },
+      "ContextSliceLanguages": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "source_lang": {
+            "type": "string"
+          },
+          "target_lang": {
+            "type": "string"
+          },
+          "level": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "uint8",
+            "minimum": 0,
+            "maximum": 255
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "languages"
+            ]
+          }
+        },
+        "required": [
+          "kind",
+          "source_lang",
+          "target_lang"
+        ]
+      },
+      "ContextSlicePlanSummary": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "plan_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "target_lang": {
+            "type": "string"
+          },
+          "set_count": {
+            "type": "integer",
+            "format": "uint32",
+            "minimum": 0
+          },
+          "sets_completed": {
+            "type": "integer",
+            "format": "uint32",
+            "minimum": 0
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "plan_summary"
+            ]
+          }
+        },
+        "required": [
+          "kind",
+          "plan_id",
+          "target_lang",
+          "set_count",
+          "sets_completed"
+        ]
+      },
+      "ContextSliceReviewDue": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "due": {
+            "type": "integer",
+            "format": "uint32",
+            "minimum": 0
+          },
+          "learned": {
+            "type": "integer",
+            "format": "uint32",
+            "minimum": 0
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "review_due"
+            ]
+          }
+        },
+        "required": [
+          "kind",
+          "due",
+          "learned"
+        ]
+      },
+      "ContextSliceTutorTopic": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "topic": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "tutor_topic"
+            ]
+          }
+        },
+        "required": [
+          "kind",
+          "topic"
+        ]
+      },
+      "AppCardReply": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "card": {
+            "$ref": "#/components/schemas/Card"
+          },
+          "tutor_note": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "card"
+        ]
+      },
+      "Card": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "elements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CardElement"
+            }
+          }
+        },
+        "required": [
+          "elements"
+        ]
+      },
+      "CardElement": {
+        "type": "object"
+      },
+      "CardElementHeading": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "level": {
+            "type": "integer",
+            "format": "uint8",
+            "minimum": 0,
+            "maximum": 255
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "heading"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "text",
+          "level"
+        ]
+      },
+      "CardElementText": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "lang": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "text"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "text"
+        ]
+      },
+      "CardElementTerm": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "word": {
+            "type": "string"
+          },
+          "reading": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "gloss": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "lang": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "term"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "word"
+        ]
+      },
+      "CardElementList": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ListItem"
+            }
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "list"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "items"
+        ]
+      },
+      "CardElementProgress": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "number",
+            "format": "double"
+          },
+          "label": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "progress"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "value",
+          "label"
+        ]
+      },
+      "CardElementDivider": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "divider"
+            ]
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "CardElementButton": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "style": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ButtonStyle"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "button"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "label",
+          "action"
+        ]
+      },
+      "CardElementLink": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "link"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "label",
+          "url"
+        ]
+      },
+      "ListItem": {
+        "type": "object"
+      },
+      "ListItemText": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "lang": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "text"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "text"
+        ]
+      },
+      "ListItemTerm": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "word": {
+            "type": "string"
+          },
+          "reading": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "gloss": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "lang": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "term"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "word"
+        ]
+      },
+      "ButtonStyle": {
+        "type": "string",
+        "enum": [
+          "primary",
+          "secondary"
+        ]
+      }
+    }
+  },
+  "x-lingara-app-operations": [
+    {
+      "operation": "sendAppRender",
+      "message": "app.render",
+      "request": "#/components/schemas/AppRenderRequest",
+      "reply_message": "app.card",
+      "reply": "#/components/schemas/AppCardReply"
+    },
+    {
+      "operation": "sendAppAction",
+      "message": "app.action",
+      "request": "#/components/schemas/AppActionRequest",
+      "reply_message": "app.card",
+      "reply": "#/components/schemas/AppCardReply"
+    }
+  ],
+  "x-lingara-unions": [
+    {
+      "name": "ContextSlice",
+      "tag": "kind",
+      "arms": [
+        {
+          "value": "languages",
+          "schema": "#/components/schemas/ContextSliceLanguages"
+        },
+        {
+          "value": "plan_summary",
+          "schema": "#/components/schemas/ContextSlicePlanSummary"
+        },
+        {
+          "value": "review_due",
+          "schema": "#/components/schemas/ContextSliceReviewDue"
+        },
+        {
+          "value": "tutor_topic",
+          "schema": "#/components/schemas/ContextSliceTutorTopic"
+        }
+      ]
+    },
+    {
+      "name": "CardElement",
+      "tag": "type",
+      "arms": [
+        {
+          "value": "heading",
+          "schema": "#/components/schemas/CardElementHeading"
+        },
+        {
+          "value": "text",
+          "schema": "#/components/schemas/CardElementText"
+        },
+        {
+          "value": "term",
+          "schema": "#/components/schemas/CardElementTerm"
+        },
+        {
+          "value": "list",
+          "schema": "#/components/schemas/CardElementList"
+        },
+        {
+          "value": "progress",
+          "schema": "#/components/schemas/CardElementProgress"
+        },
+        {
+          "value": "divider",
+          "schema": "#/components/schemas/CardElementDivider"
+        },
+        {
+          "value": "button",
+          "schema": "#/components/schemas/CardElementButton"
+        },
+        {
+          "value": "link",
+          "schema": "#/components/schemas/CardElementLink"
+        }
+      ]
+    },
+    {
+      "name": "ListItem",
+      "tag": "type",
+      "arms": [
+        {
+          "value": "text",
+          "schema": "#/components/schemas/ListItemText"
+        },
+        {
+          "value": "term",
+          "schema": "#/components/schemas/ListItemTerm"
+        }
+      ]
+    }
+  ]
+}

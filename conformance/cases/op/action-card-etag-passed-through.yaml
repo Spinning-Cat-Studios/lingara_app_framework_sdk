@@ -1,0 +1,14 @@
+id: op.action-card-etag-passed-through
+behaviours: [AK2]
+request:
+  operation: app.action
+  body:
+    raw: '{"type":"app.action","id":"lgr_msg_00000000000000000000000000000000","install_id":"7c1d2e3f-4a5b-4c6d-8e7f-9a0b1c2d3e4f","subject":"lgr_sub_conformance","slot":"plans.empty_detail","locale":"ja","context":[],"action_id":"inc","card_etag":"etag-from-elsewhere.v9"}'
+expect:
+  status: 200
+  body:
+    json:
+      card:
+        elements:
+          - { type: progress, value: 0.5, label: inc }
+          - { type: text, text: etag-from-elsewhere.v9 }

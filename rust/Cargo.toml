@@ -1,0 +1,45 @@
+[package]
+name = "lingara-apps"
+# Equal to the repository's VERSION; the release tooling writes both.
+version = "0.1.0-alpha.3"
+edition = "2024"
+# The library's own floor: lingara 0.1.0-alpha.10 declares 1.87 (its tree
+# needs it), so the kit can ask for nothing lower.
+rust-version = "1.87"
+license = "MIT"
+description = "The official Lingara app kit for Rust: verify, decode and answer the relay's signed requests with a card."
+repository = "https://github.com/Spinning-Cat-Studios/lingara_app_framework_sdk"
+homepage = "https://getlingara.com"
+readme = "README.md"
+keywords = ["lingara", "apps", "webhooks", "language-learning", "axum"]
+categories = ["web-programming::http-server", "api-bindings"]
+include = ["src/**", "README.md", "LICENSE"]
+
+[lib]
+name = "lingara_apps"
+
+[features]
+default = []
+# The adapter (ADR 30.9.26am D2): `lingara_apps::axum::router(app)`.
+axum = ["dep:axum"]
+
+# The library and the packages it already carries (ADR 30.9.26am D1): no
+# JSON, HTTP or crypto crate of the kit's own.
+[dependencies]
+lingara = "0.1.0-alpha.10"
+# The library's own logging facade, so a kit failure lands where the
+# library's log lines do.
+log = "0.4"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+axum = { version = "0.8", optional = true, default-features = false }
+
+[dev-dependencies]
+# The doc example serves the router, which needs axum's server half.
+axum = { version = "0.8", default-features = false, features = ["http1", "tokio"] }
+base64 = "0.22"
+hmac = "0.12"
+sha2 = "0.10"
+tokio = { version = "1", features = ["macros", "net", "rt-multi-thread"] }
+toml = "0.8"
+tower = { version = "0.5", features = ["util"] }

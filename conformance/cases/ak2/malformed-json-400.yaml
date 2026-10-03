@@ -1,0 +1,8 @@
+id: ak2.malformed-json-400
+behaviours: [AK2]
+request:
+  body:
+    raw: '{"type": "app.render", '
+expect:
+  status: 400
+  body: { json: { error: bad_request } }

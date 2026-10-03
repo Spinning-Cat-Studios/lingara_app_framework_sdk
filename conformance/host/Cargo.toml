@@ -1,0 +1,24 @@
+[package]
+name = "lingara-apps-conformance-host"
+version = "0.0.0"
+edition = "2024"
+license = "MIT"
+publish = false
+description = "The Lingara relay's stand-in: signs a request per conformance case, sends it to an app kit's fixture app, and judges the reply"
+
+[dependencies]
+base64 = "0.22"
+clap = { version = "4", features = ["derive"] }
+hmac = "0.12"
+jsonschema = { version = "0.33", default-features = false }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+serde_yaml = "0.9"
+sha2 = "0.10"
+tokio = { version = "1", features = ["io-util", "macros", "net", "process", "rt-multi-thread", "time"] }
+# link.url is judged with the WHATWG parser the relay uses (reqwest's Url is
+# this crate).
+url = "2"
+
+[dev-dependencies]
+tempfile = "3"

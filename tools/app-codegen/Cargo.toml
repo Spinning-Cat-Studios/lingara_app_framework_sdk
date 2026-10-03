@@ -1,0 +1,19 @@
+[package]
+name = "app-codegen"
+version = "0.0.0"
+edition = "2024"
+license = "MIT"
+publish = false
+description = "Writes the app view (OpenAPI 3.1 and 3.0) of the Lingara AsyncAPI catalogue's app operations"
+
+[dependencies]
+# preserve_order: key order follows the source, so the view is byte-stable.
+serde_json = { version = "1", features = ["preserve_order"] }
+toml = "0.8"
+# The 3.0 dialect, the pointer escape and the renderer are the client
+# libraries' implementation, by tag, never a copy (ADR 30.9.26al D4): a fix
+# there reaches this view at the next pin bump.
+spec-codegen = { git = "https://github.com/Spinning-Cat-Studios/lingara_api_clients", tag = "v0.1.0-alpha.6" }
+
+[dev-dependencies]
+tempfile = "3"

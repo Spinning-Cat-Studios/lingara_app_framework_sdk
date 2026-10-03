@@ -1,0 +1,16 @@
+id: ak4.handler-raises-500-quietly
+behaviours: [AK4]
+request:
+  operation: app.action
+  body:
+    json:
+      install_id: 7c1d2e3f-4a5b-4c6d-8e7f-9a0b1c2d3e4f
+      subject: lgr_sub_conformance
+      slot: plans.empty_detail
+      locale: ja
+      context: []
+      action_id: boom
+      card_etag: c1_8f14e45fceea167a5a36dedd4bea2543
+expect:
+  status: 500
+  body: { json: { error: handler_failed } }

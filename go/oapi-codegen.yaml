@@ -1,0 +1,29 @@
+# oapi-codegen, types only (ADR 30.9.26am D6, after the library's 29.9.26q
+# D2), run from the repository root over spec/generator/apps.3.0.json. Every
+# option below keeps models_gen.go on the standard library, so the module's
+# only require stays the library's.
+package: lingaraapps
+generate:
+  models: true
+compatibility:
+  # A bare `Heading` or `Primary` constant would read as the package's own API.
+  always-prefix-enum-values: true
+output-options:
+  # The union arms are referenced only from x-lingara-unions; the default
+  # prune drops them.
+  skip-prune: true
+  # oapi-codegen's oneOf output imports its runtime package, and these three
+  # are bare objects in the view. go/codegen writes them as sealed interfaces
+  # in apps_gen.go instead.
+  exclude-schemas:
+    - CardElement
+    - ListItem
+    - ContextSlice
+  # The default maps format uuid to a type from the runtime package.
+  type-mapping:
+    string:
+      formats:
+        uuid:
+          type: string
+  # Go's initialisms: InstallID, PlanID, ActionID.
+  name-normalizer: ToCamelCaseWithInitialisms

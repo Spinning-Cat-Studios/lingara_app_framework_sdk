@@ -1,0 +1,14 @@
+[package]
+name = "lingara-apps-conformance-rust"
+version = "0.0.0"
+edition = "2024"
+license = "MIT"
+publish = false
+description = "The Rust kit's fixture app (CONTRACT.md §F): the conformance host's counterpart, on axum and tokio"
+
+# Conformance only (ADR 30.9.26am D9): axum's server half and tokio never
+# reach the published kit's manifest.
+[dependencies]
+axum = "0.8"
+lingara-apps = { path = "..", features = ["axum"] }
+tokio = { version = "1", features = ["macros", "net", "rt-multi-thread"] }

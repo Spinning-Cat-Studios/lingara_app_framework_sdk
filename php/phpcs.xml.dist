@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+  The size and complexity budgets over the hand-written code, at the PHP
+  library's numbers (ADR 30.9.26am D9). Budget sniffs only: style is
+  php-cs-fixer's, so the two never disagree.
+-->
+<ruleset name="lingara-apps-budgets">
+    <!-- Relative to PHP_CodeSniffer's own directory, so any working directory works. -->
+    <config name="installed_paths" value="../../slevomat/coding-standard"/>
+
+    <file>src</file>
+    <file>tests</file>
+    <file>conformance</file>
+    <exclude-pattern>src/Generated/*</exclude-pattern>
+    <exclude-pattern>src/ObjectSerializer.php</exclude-pattern>
+
+    <arg name="extensions" value="php"/>
+    <arg name="colors"/>
+    <arg value="s"/>
+
+    <rule ref="SlevomatCodingStandard.Files.FileLength">
+        <properties>
+            <property name="maxLinesLength" value="600"/>
+        </properties>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Functions.FunctionLength">
+        <properties>
+            <property name="maxLinesLength" value="50"/>
+        </properties>
+    </rule>
+    <rule ref="Generic.Metrics.CyclomaticComplexity">
+        <properties>
+            <property name="complexity" value="10"/>
+            <property name="absoluteComplexity" value="10"/>
+        </properties>
+    </rule>
+</ruleset>

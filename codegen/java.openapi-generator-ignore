@@ -1,0 +1,8 @@
+# The three app unions and their arms are AppsCodegen's, not
+# openapi-generator's (ADR 30.9.26am D6), so each arm can implement its sealed
+# union. One glob per union covers the union and every `<Union><Tag>` arm.
+# AppsCodegen refuses a staged file named after a union or an arm, so a
+# fourth union this file does not name fails generateJava.
+**/model/CardElement*.java
+**/model/ListItem*.java
+**/model/ContextSlice*.java

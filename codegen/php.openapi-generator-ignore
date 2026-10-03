@@ -1,0 +1,8 @@
+# The three app unions and their arms are php/codegen/generate.php's, not
+# openapi-generator's (ADR 30.9.26am D6). One glob per union covers the union
+# and every `<Union><Tag>` arm. The leading `**/` matches the root-relative
+# src/Generated/<file>. generate.php refuses a model directory holding any of
+# these names, so a fourth union this file does not name fails codegen-php.
+**/Generated/CardElement*.php
+**/Generated/ListItem*.php
+**/Generated/ContextSlice*.php

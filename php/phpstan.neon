@@ -1,0 +1,15 @@
+# PHPStan at level max over the hand-written code: src/ without the
+# generated paths, the tests, the fixture app and the snippets, which this
+# type-checks against the kit (ADR 30.9.26am D7, D9; the library's 29.9.26u
+# D7 settings).
+parameters:
+    level: max
+    paths:
+        - src
+        - tests
+        - conformance
+        - ../snippets/php
+    excludePaths:
+        - src/Generated
+        - src/ObjectSerializer.php
+    tmpDir: vendor/.phpstan
