@@ -24,7 +24,7 @@ and replies. A card a kit sends is never clamped or refused by Lingara.
 | Java | `com.getlingara:lingara-apps-java` | Maven Central | `JdkHttpHandler.of(app)` for the JDK's `HttpServer` |
 | Kotlin | `com.getlingara:lingara-apps-kotlin` | Maven Central | `Route.lingaraApp(app)` for Ktor 3 |
 | Ruby | `lingara-apps` | `gem install lingara-apps --pre` | `Lingara::Apps::RackApp.new(app)` |
-| PHP | `spinningcatstudios/lingara-apps` | `composer require spinningcatstudios/lingara-apps:@alpha` | `Psr15Handler`, a PSR-15 request handler |
+| PHP | `spinningcatstudios/lingara-apps` | `composer require spinningcatstudios/lingara-apps:@alpha spinningcatstudios/lingara:@alpha` | `Psr15Handler`, a PSR-15 request handler |
 
 Every kit is a pre-release until `1.0.0`, and every kit depends on its
 language's `lingara` client library from the version in

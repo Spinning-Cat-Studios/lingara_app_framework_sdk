@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.1.0-alpha.4 — 2026-10-03
+
+
+Generated from Lingara API 2026-10-affable-towhee (supported) at spec backend@43259e6fb944ab0c816525aee47c0598af8b9503.
+
+### Fixed
+
+- The PHP install line now requires `spinningcatstudios/lingara:@alpha` beside `spinningcatstudios/lingara-apps`. Composer's default `minimum-stability` is `stable`, and naming the kit's pre-release version allows only the kit itself, so its pre-release `lingara` dependency was refused and v0.1.0-alpha.3's line could not install. The packages are unchanged.
+
 ## v0.1.0-alpha.3 — 2026-10-03
 
 

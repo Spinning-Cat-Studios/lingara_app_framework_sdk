@@ -1,6 +1,6 @@
 {
   "name": "@lingara/apps",
-  "version": "0.1.0-alpha.3",
+  "version": "0.1.0-alpha.4",
   "description": "The official Lingara app kit for Node: verify, dispatch and answer Lingara's signed app requests with a card.",
   "license": "MIT",
   "repository": {
