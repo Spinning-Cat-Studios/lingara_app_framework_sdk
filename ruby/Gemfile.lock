@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lingara-apps (0.1.0.pre.alpha.4)
+    lingara-apps (0.1.0.pre.alpha.5)
       lingara (>= 0.1.0.pre.alpha.10, < 0.2)
 
 GEM

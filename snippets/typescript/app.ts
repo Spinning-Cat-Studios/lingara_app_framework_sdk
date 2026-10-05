@@ -1,13 +1,7 @@
 import { createServer } from "node:http";
 
-import { Lingara } from "@lingara/api";
 import { card, item, lingaraApp, nodeHandler, reply, type AppRenderRequest, type Card } from "@lingara/apps";
 
-// The app's own client-credentials client: it speaks for the app's owner.
-const client = new Lingara({
-  clientId: process.env.LINGARA_CLIENT_ID!,
-  clientSecret: process.env.LINGARA_CLIENT_SECRET!,
-});
 const streaks = new Map<string, number>();
 
 // lingara:begin card
@@ -22,23 +16,22 @@ function todayCard(streak: number): Card {
 // lingara:end
 
 // lingara:begin context
-async function planLine(request: AppRenderRequest): Promise<string> {
+// The app's own client reads its owner's account, never the learner's. The
+// slices are all a render knows about the learner.
+function planLine(request: AppRenderRequest): string {
   let line = "";
   for (const slice of request.context) {
     // A slice is present only when the learner agreed to share it.
     if (slice.kind === "languages") line += `${slice.source_lang} → ${slice.target_lang}. `;
-    if (slice.kind === "plan_summary") {
-      const plan = await client.getLessonPlan({ id: slice.plan_id });
-      line += `${plan.title}: ${slice.sets_completed}/${slice.set_count} sets.`;
-    }
+    if (slice.kind === "plan_summary") line += `${slice.sets_completed}/${slice.set_count} sets.`;
   }
   return line;
 }
 // lingara:end
 
 // lingara:begin tutorNote
-async function withNote(request: AppRenderRequest) {
-  const note = await planLine(request);
+function withNote(request: AppRenderRequest) {
+  const note = planLine(request);
   // Plain text, at most 280 characters; the tutor reads it, the learner does not.
   return note === "" ? todayCard(0) : reply(todayCard(0)).tutorNote(note);
 }

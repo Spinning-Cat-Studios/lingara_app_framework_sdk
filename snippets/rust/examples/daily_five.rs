@@ -4,7 +4,6 @@
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 
-use lingara_apps::lingara::Client;
 use lingara_apps::{
     App, AppActionRequest, AppRenderRequest, AppSlotName, BoxError, ContextSlice, ContextSliceKind, Reply, Term, card, item, manifest, reply,
 };
@@ -13,24 +12,20 @@ use lingara_apps::{
 type Seen = Arc<Mutex<HashMap<String, u32>>>;
 
 // lingara:begin context
-/// The learner's target language and the title of the plan they shared, read
-/// from the context slices. The plan itself comes from the library: the
-/// app's own client-credentials client speaks for the app's owner; a plan of
-/// any other learner needs that learner's token.
-async fn shared_plan(client: &Client, request: &AppRenderRequest) -> Result<(String, Option<String>), BoxError> {
-    let (mut target_lang, mut plan_id) = (String::from("zh"), None);
+// The app's own client reads its owner's account, never the learner's. The
+// slices are all a render knows about the learner.
+/// The learner's target language and, when they shared their plan, its
+/// `(sets_completed, set_count)`.
+fn shared_plan(request: &AppRenderRequest) -> (String, Option<(u32, u32)>) {
+    let (mut target_lang, mut progress) = (String::from("zh"), None);
     for slice in &request.context {
         match slice {
             ContextSlice::Languages(languages) => target_lang = languages.target_lang.clone(),
-            ContextSlice::PlanSummary(summary) => plan_id = Some(summary.plan_id.clone()),
+            ContextSlice::PlanSummary(summary) => progress = Some((summary.sets_completed, summary.set_count)),
             _ => {}
         }
     }
-    let title = match plan_id {
-        Some(id) => client.get_lesson_plan(&id).await?.title.clone(),
-        None => None,
-    };
-    Ok((target_lang, title))
+    (target_lang, progress)
 }
 // lingara:end
 
@@ -46,12 +41,16 @@ fn today_card(title: &str, lang: &str) -> Result<lingara_apps::Card, BoxError> {
 // lingara:end
 
 // lingara:begin tutorNote
-async fn render(client: Client, seen: Seen, request: AppRenderRequest) -> Result<Reply, BoxError> {
-    let (lang, plan) = shared_plan(&client, &request).await?;
+async fn render(seen: Seen, request: AppRenderRequest) -> Result<Reply, BoxError> {
+    let (lang, progress) = shared_plan(&request);
     let count = seen.lock().map_err(|_| "poisoned")?.get(&request.subject).copied().unwrap_or(0);
-    let card = today_card(plan.as_deref().unwrap_or("Today's five"), &lang)?;
+    let card = today_card("Today's five", &lang)?;
     // Plain text the learner's tutor can read: at most 280 characters.
-    Ok(reply(card).tutor_note(format!("The learner has reviewed {count} words with this app today."))?)
+    let note = match progress {
+        Some((done, total)) => format!("The learner has reviewed {count} words with this app today; {done} of {total} sets done."),
+        None => format!("The learner has reviewed {count} words with this app today."),
+    };
+    Ok(reply(card).tutor_note(note)?)
 }
 // lingara:end
 
@@ -65,22 +64,18 @@ async fn main() -> Result<(), BoxError> {
         .render_url("https://apps.example.com/lingara/render")
         .slots([AppSlotName::HomeSide, AppSlotName::PlansEmptyDetail])
         .context([ContextSliceKind::Languages, ContextSliceKind::PlanSummary])
-        .scopes(["plans:read"])
+        // `.scopes(…)` lists the API scopes your client uses, for the learner's consent page. This app uses none.
         .tutor_note(true)
         .build()?;
     std::fs::write("manifest.json", manifest.to_json())?;
     // lingara:end
 
     // lingara:begin handler
-    // The app's signing secret (lgr_whsec_…) and its API credentials, from
-    // the environment.
-    let client = Client::builder()
-        .client_credentials(std::env::var("LINGARA_CLIENT_ID")?, std::env::var("LINGARA_CLIENT_SECRET")?)
-        .build()?;
+    // The app's signing secret (lgr_whsec_…), from the environment.
     let seen = Seen::default();
     let (render_seen, action_seen) = (Arc::clone(&seen), Arc::clone(&seen));
     let app = App::new([std::env::var("LINGARA_APP_SECRET")?], move |request: AppRenderRequest| {
-        render(client.clone(), Arc::clone(&render_seen), request)
+        render(Arc::clone(&render_seen), request)
     })?
     // The button's `action` comes back as `action_id`. An action can arrive
     // twice, so keep it safe to repeat.

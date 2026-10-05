@@ -12,7 +12,7 @@ module LingaraAppsSnippets
       .render_url("https://apps.example.com/lingara")
       .slots("home.side", "plans.empty_detail")
       .context("languages", "plan_summary")
-      .scopes("plans:read")
+      # `.scopes(…)` lists the API scopes your client uses, for the learner's consent page. This app uses none.
       .tutor_note
     # Raises Lingara::Apps::ManifestError naming the rule the upload would refuse.
     File.write("manifest.json", manifest.to_json)

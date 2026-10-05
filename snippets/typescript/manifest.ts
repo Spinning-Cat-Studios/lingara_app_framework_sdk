@@ -10,7 +10,7 @@ const json = manifest()
   .renderUrl("https://apps.example.com/lingara/render")
   .slots("home.side", "plans.empty_detail")
   .context("languages", "plan_summary")
-  .scopes("plans:read")
+  // `.scopes(…)` lists the API scopes your client uses, for the learner's consent page. This app uses none.
   .tutorNote()
   .toJson(); // Throws ManifestError naming the rule an upload would refuse.
 

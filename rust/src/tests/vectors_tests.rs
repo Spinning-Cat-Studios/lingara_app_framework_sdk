@@ -56,6 +56,8 @@ fn the_card_builder_refuses_what_the_relay_would_clamp() {
 
 /// The manifest builder writes A1 §2's form, with a bare string as the
 /// default locale's and `listed` false unless set.
+// 4.10.26e AC4: a real scope (`lesson_plans:read`) builds and validates; the
+// same one twice is refused as `duplicate`.
 #[test]
 fn the_manifest_builder_writes_the_upload() {
     let built = manifest()
@@ -65,7 +67,7 @@ fn the_manifest_builder_writes_the_upload() {
         .render_url("https://apps.example.com/lingara/render")
         .slots([AppSlotName::HomeSide, AppSlotName::PlansEmptyDetail])
         .context([ContextSliceKind::Languages])
-        .scopes(["plans:read"])
+        .scopes(["lesson_plans:read"])
         .tutor_note(true)
         .build()
         .unwrap();
@@ -83,5 +85,5 @@ fn the_manifest_builder_writes_the_upload() {
     assert_eq!(rule(base().render_url("http://apps.example.com/")), "render_url");
     assert_eq!(rule(base().render_url("https://apps.example.com/")), "slots");
     let slots = || base().render_url("https://apps.example.com/").slots([AppSlotName::HomeSide]);
-    assert_eq!(rule(slots().scopes(["plans:read", "plans:read"])), "duplicate");
+    assert_eq!(rule(slots().scopes(["lesson_plans:read", "lesson_plans:read"])), "duplicate");
 }

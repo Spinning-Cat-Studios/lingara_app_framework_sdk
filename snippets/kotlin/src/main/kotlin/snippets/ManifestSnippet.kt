@@ -19,7 +19,8 @@ fun manifestSnippet() {
             renderUrl = "https://apps.example.com/lingara/render"
             slots(AppSlotName.HOME_PERIOD_SIDE)
             context(ContextSliceKind.LANGUAGES, ContextSliceKind.PLAN_SUMMARY)
-            scopes("plans:read")
+            // `scopes(…)` lists the API scopes your client uses, for the learner's consent page.
+            // This app uses none.
             tutorNote = true
         }.toJson() // refuses what the upload would, naming the rule
     // Upload manifest.json in the console, beside the app's icon.

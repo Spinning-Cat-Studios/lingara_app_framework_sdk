@@ -10,7 +10,7 @@ RELEASE_MANIFEST_REPO := https://github.com/Spinning-Cat-Studios/lingara_api_cli
 RELEASE_MANIFEST_ROOT := .tools/release-manifest-$(RELEASE_MANIFEST_TAG)
 RELEASE_MANIFEST := $(RELEASE_MANIFEST_ROOT)/bin/release-manifest
 
-.PHONY: install-release-manifest bump-version release-matrix release-build release-conformance check-release-tree check-library-floor help-release
+.PHONY: install-release-manifest bump-version release-matrix release-build release-conformance check-release-tree check-library-floor check-snippet-scopes help-release
 
 $(RELEASE_MANIFEST):
 	$(CARGO) install --git $(RELEASE_MANIFEST_REPO) --tag $(RELEASE_MANIFEST_TAG) --locked --root $(RELEASE_MANIFEST_ROOT) release-manifest
@@ -52,6 +52,12 @@ check-library-floor:
 	tools/library-floor/check_test.sh
 	tools/library-floor/check.sh
 
+## Every scope a snippet or vector spells is in the spec, and no context
+## region reads a lesson plan (ADR 4.10.26e D4), and the check's own test.
+check-snippet-scopes:
+	bash tools/snippet-scopes/check_test.sh
+	bash tools/snippet-scopes/check.sh
+
 help-release:
 	@echo ""
 	@echo "Release:"
@@ -62,5 +68,6 @@ help-release:
 	@echo "  make release-conformance ID=<id> - One kit's conformance suite"
 	@echo "  make check-release-tree          - languages.toml agrees with the tree"
 	@echo "  make check-library-floor         - One LIBRARY_FLOOR in seven manifests"
+	@echo "  make check-snippet-scopes        - Snippet and vector scopes are in the spec"
 
 HELP_SECTIONS += release

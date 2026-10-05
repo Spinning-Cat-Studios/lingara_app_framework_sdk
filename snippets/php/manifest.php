@@ -19,7 +19,7 @@ function manifest(): void
         ->renderUrl('https://apps.example.com/lingara/render')
         ->slots(AppSlotName::HOME_SIDE, AppSlotName::PLANS_EMPTY_DETAIL)
         ->context('languages', 'plan_summary')
-        ->scopes('plans:read')
+        // `->scopes(…)` lists the API scopes your client uses, for the learner's consent page. This app uses none.
         ->tutorNote()
         ->toJson(); // Throws ManifestException naming the rule an upload would refuse.
 

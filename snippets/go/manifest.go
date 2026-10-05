@@ -18,7 +18,7 @@ func writeManifest() error {
 		RenderURL("https://apps.example.com/lingara").
 		Slots(lingaraapps.AppSlotNameHomeSide, lingaraapps.AppSlotNamePlansEmptyDetail).
 		Context(lingaraapps.ContextSliceKindLanguages, lingaraapps.ContextSliceKindPlanSummary).
-		Scopes("plans:read").
+		// `.Scopes(…)` lists the API scopes your client uses, for the learner's consent page. This app uses none.
 		TutorNote(true).
 		Build()
 	if err != nil {

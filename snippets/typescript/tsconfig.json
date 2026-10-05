@@ -11,8 +11,7 @@
     "typeRoots": ["../../typescript/node_modules/@types"],
     "types": ["node"],
     "paths": {
-      "@lingara/apps": ["../../typescript/dist/index.d.ts"],
-      "@lingara/api": ["../../typescript/node_modules/@lingara/api/dist/index.d.ts"]
+      "@lingara/apps": ["../../typescript/dist/index.d.ts"]
     }
   },
   "include": ["*.ts"]

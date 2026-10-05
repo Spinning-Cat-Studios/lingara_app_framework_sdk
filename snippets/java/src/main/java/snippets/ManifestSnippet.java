@@ -24,7 +24,8 @@ public final class ManifestSnippet {
             .renderUrl("https://apps.example.com/lingara/render")
             .slots(AppSlotName.HOME_SIDE)
             .context(ContextSliceKind.LANGUAGES, ContextSliceKind.PLAN_SUMMARY)
-            .scopes("plans:read")
+            // `.scopes(…)` lists the API scopes your client uses, for the learner's consent
+            // page. This app uses none.
             .tutorNote(true)
             .build() // refuses what the upload would, naming the rule
             .toJson();

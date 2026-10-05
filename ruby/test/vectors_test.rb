@@ -72,14 +72,22 @@ class VectorsTest < Minitest::Test
     assert_equal :tutor_note_length, error.reason
   end
 
+  # 4.10.26e AC5: a real scope (`lesson_plans:read`) builds; the same one twice
+  # is refused as `duplicate`.
   def test_the_manifest_builder_writes_the_upload
     manifest = Lingara::Apps.manifest.default_locale("en").name("Daily five").description({"en" => "Five words."})
-      .render_url("https://apps.example.com/lingara").slots("home.side").context("languages").scopes("plans:read")
+      .render_url("https://apps.example.com/lingara").slots("home.side").context("languages").scopes("lesson_plans:read")
       .tutor_note.build
     assert_equal({"en" => "Daily five"}, manifest["name"])
+    assert_equal ["lesson_plans:read"], manifest["scopes"]
     assert_equal [true, false], [manifest["tutor_note"], manifest["listed"]]
     error = assert_raises(Lingara::Apps::ManifestError) { Lingara::Apps.manifest.default_locale("en").name("x").build }
     assert_equal :description, error.rule
+    error = assert_raises(Lingara::Apps::ManifestError) do
+      Lingara::Apps.manifest.default_locale("en").name("n").description("d").render_url("https://a.example")
+        .slots("home.side").scopes("lesson_plans:read", "lesson_plans:read").build
+    end
+    assert_equal :duplicate, error.rule
     json = JSON.parse(Lingara::Apps.manifest.default_locale("en").name("n").description("d").render_url("https://a.example")
       .slots("home.side").to_json)
     assert_equal 1, json["manifest_version"]

@@ -191,7 +191,8 @@ public final class Manifest {
     }
 
     /**
-     * The API scopes the app's client asks for, such as {@code plans:read}.
+     * The API scopes the app's client uses, listed on the learner's consent page; each must be one
+     * of the client's allowed scopes, such as {@code lesson_plans:read}.
      *
      * @param scopes the scopes
      * @return this builder

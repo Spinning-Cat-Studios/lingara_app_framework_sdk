@@ -20,8 +20,9 @@ test-tools:
 
 ## What a published snapshot must pass: run before every publish. Also one
 ## library floor in every kit's manifest, and languages.toml against the tree
-## (make/release.mk, ADR 30.9.26am D1, D8).
-check-publishable: check-spec-view check-codegen check-library-floor check-release-tree
+## (make/release.mk, ADR 30.9.26am D1, D8), and every scope the kit spells
+## against the spec (ADR 4.10.26e D4).
+check-publishable: check-spec-view check-codegen check-library-floor check-snippet-scopes check-release-tree
 
 help-quality:
 	@echo ""

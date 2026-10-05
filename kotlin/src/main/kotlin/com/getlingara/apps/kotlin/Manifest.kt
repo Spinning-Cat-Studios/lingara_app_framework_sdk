@@ -111,7 +111,10 @@ public class ManifestBuilder internal constructor() {
         kinds.mapTo(context) { it.value }
     }
 
-    /** The API scopes the app's client asks for, such as `plans:read`. */
+    /**
+     * The API scopes the app's client uses, listed on the learner's consent page; each must be
+     * one of the client's allowed scopes, such as `lesson_plans:read`.
+     */
     public fun scopes(vararg scopes: String) {
         this.scopes += scopes
     }
