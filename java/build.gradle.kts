@@ -23,7 +23,7 @@ sourceSets {
 }
 
 dependencies {
-    api("com.getlingara:lingara-java:0.1.0-alpha.10")
+    api("com.getlingara:lingara-java:0.1.0-alpha.12")
 }
 
 val pom = tasks.named("generatePomFileForMavenPublication")

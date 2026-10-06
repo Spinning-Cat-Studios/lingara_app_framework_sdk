@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.1.0-alpha.6 — 2026-10-06
+
+
+### Added
+
+### Changed
+
+- Every kit now requires the `lingara` library at `0.1.0-alpha.12` or later (was `0.1.0-alpha.10`). That release is generated for the frozen API version `2026-10-affable-towhee`, to which new OAuth clients have been pinned since 2026-10-02, so an app's owner calls no longer log a version-mismatch warning. Go, Java and Kotlin pinned the exact version, so this is what brings them the new library; the other kits' ranges already allowed it, and now start there.
+
+### Fixed
+
+### Removed
+
 ## v0.1.0-alpha.5 — 2026-10-06
 
 

@@ -1,13 +1,13 @@
 PATH
   remote: ..
   specs:
-    lingara-apps (0.1.0.pre.alpha.5)
-      lingara (>= 0.1.0.pre.alpha.10, < 0.2)
+    lingara-apps (0.1.0.pre.alpha.6)
+      lingara (>= 0.1.0.pre.alpha.12, < 0.2)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    lingara (0.1.0.pre.alpha.10)
+    lingara (0.1.0.pre.alpha.12)
     rack (3.2.7)
     rackup (2.3.1)
       rack (>= 3)

@@ -25,7 +25,7 @@ kotlin {
 }
 
 dependencies {
-    api("com.getlingara:lingara-kotlin:0.1.0-alpha.10")
+    api("com.getlingara:lingara-kotlin:0.1.0-alpha.12")
     compileOnly(libs.ktor.server.core)
     testImplementation(libs.ktor.server.test.host)
 }

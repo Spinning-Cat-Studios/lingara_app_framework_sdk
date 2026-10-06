@@ -7,7 +7,7 @@
 # The library each kit depends on. It is also LIBRARY_FLOOR, which
 # tools/library-floor/check.sh holds equal to the literal in java/ and kotlin/
 # build files; this entry is for the snippet and conformance projects.
-lingara = "0.1.0-alpha.10"
+lingara = "0.1.0-alpha.12"
 # What lingara-java carries (its `api` dependency), pinned here for :codegen
 # only: the kit itself takes Jackson through the library, never directly.
 jackson = "2.22.3"

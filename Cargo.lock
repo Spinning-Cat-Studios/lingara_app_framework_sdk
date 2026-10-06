@@ -847,9 +847,9 @@ checksum = "ce5d3ddc6d3fa000eb1536d85e147bfe31aacaba692ed6a876f95cb7c855be78"
 
 [[package]]
 name = "lingara"
-version = "0.1.0-alpha.10"
+version = "0.1.0-alpha.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "234dfd63ae25e16345ace3bb46f88c18514fb6842a06229a24c261377dfc5890"
+checksum = "d684cad0040e9a560942a195420c13f7f9e369002655a7dc4a04d147f726cb21"
 dependencies = [
  "base64 0.22.1",
  "bytes",
@@ -872,7 +872,7 @@ dependencies = [
 
 [[package]]
 name = "lingara-apps"
-version = "0.1.0-alpha.5"
+version = "0.1.0-alpha.6"
 dependencies = [
  "axum",
  "base64 0.22.1",

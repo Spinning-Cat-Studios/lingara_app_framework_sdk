@@ -1,9 +1,9 @@
 [package]
 name = "lingara-apps"
 # Equal to the repository's VERSION; the release tooling writes both.
-version = "0.1.0-alpha.5"
+version = "0.1.0-alpha.6"
 edition = "2024"
-# The library's own floor: lingara 0.1.0-alpha.10 declares 1.87 (its tree
+# The library's own floor: lingara 0.1.0-alpha.12 declares 1.87 (its tree
 # needs it), so the kit can ask for nothing lower.
 rust-version = "1.87"
 license = "MIT"
@@ -26,7 +26,7 @@ axum = ["dep:axum"]
 # The library and the packages it already carries (ADR 30.9.26am D1): no
 # JSON, HTTP or crypto crate of the kit's own.
 [dependencies]
-lingara = "0.1.0-alpha.10"
+lingara = "0.1.0-alpha.12"
 # The library's own logging facade, so a kit failure lands where the
 # library's log lines do.
 log = "0.4"

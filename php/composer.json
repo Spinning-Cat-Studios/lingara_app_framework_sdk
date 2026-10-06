@@ -9,7 +9,7 @@
         "php": ">=8.2",
         "psr/http-factory": "^1.0",
         "psr/http-server-handler": "^1.0",
-        "spinningcatstudios/lingara": "^0.1.0-alpha.10"
+        "spinningcatstudios/lingara": "^0.1.0-alpha.12"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.64",

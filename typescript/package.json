@@ -1,6 +1,6 @@
 {
   "name": "@lingara/apps",
-  "version": "0.1.0-alpha.5",
+  "version": "0.1.0-alpha.6",
   "description": "The official Lingara app kit for Node: verify, dispatch and answer Lingara's signed app requests with a card.",
   "license": "MIT",
   "repository": {
@@ -45,7 +45,7 @@
     "check": "eslint . && tsc --noEmit"
   },
   "dependencies": {
-    "@lingara/api": "^0.1.0-alpha.10"
+    "@lingara/api": "^0.1.0-alpha.12"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
