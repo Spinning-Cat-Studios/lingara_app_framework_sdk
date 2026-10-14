@@ -3,12 +3,12 @@
 module Lingara
   module Apps
     # This kit's released version, SemVer.
-    VERSION = "0.1.0-alpha.6"
+    VERSION = "0.1.0-alpha.7"
 
     # The same version in RubyGems' spelling, which the gemspec uses.
-    GEM_VERSION = "0.1.0.pre.alpha.6"
+    GEM_VERSION = "0.1.0.pre.alpha.7"
 
     # The API version the app view was generated from.
-    GENERATED_FROM = "2026-10-affable-towhee"
+    GENERATED_FROM = "2026-10-virile-dragon"
   end
 end

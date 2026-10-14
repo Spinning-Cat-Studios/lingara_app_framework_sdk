@@ -17,3 +17,7 @@ spec-codegen = { git = "https://github.com/Spinning-Cat-Studios/lingara_api_clie
 
 [dev-dependencies]
 tempfile = "3"
+# Pins this crate's copy of the current-entry rule to the one the publish
+# precheck runs (ADR 6.10.26i D5). The tag is make/release.mk's
+# RELEASE_MANIFEST_TAG: a bump moves both.
+release-manifest = { git = "https://github.com/Spinning-Cat-Studios/lingara_api_clients", tag = "v0.1.0-alpha.13" }

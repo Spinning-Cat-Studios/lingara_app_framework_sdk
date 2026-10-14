@@ -103,3 +103,37 @@ fn the_30_dialect_comes_from_the_shared_crate() {
     all_keys(&v30, &mut keys);
     assert!(!keys.iter().any(|k| k == "const"), "a const reached the 3.0 dialect");
 }
+
+/// ADR 6.10.26i AC9: this repo's copy of the current-entry rule picks the id
+/// the pinned `release-manifest check-current` picks, so the publish precheck
+/// compares the version this repo generates for. An `lts` entry outranks an
+/// older `supported` one; `deprecated` and `development` never count.
+#[test]
+fn current_id_agrees_with_release_manifest() {
+    let registry: toml::Table = r#"
+[[version]]
+id = "2026-08-a"
+minted_at = "2026-08-01T00:00:00Z"
+state = "supported"
+
+[[version]]
+id = "2026-09-b"
+minted_at = "2026-09-01T00:00:00Z"
+state = "lts"
+
+[[version]]
+id = "2026-09-c"
+minted_at = "2026-09-15T00:00:00Z"
+state = "deprecated"
+
+[[version]]
+id = "2026-10-d"
+minted_at = "2026-10-01T00:00:00Z"
+state = "development"
+"#
+    .parse()
+    .unwrap();
+    let ours = crate::cli::current_id(&registry);
+    assert_eq!(ours.as_deref(), Some("2026-09-b"));
+    assert_eq!(ours, release_manifest::current::current_id(&registry));
+}

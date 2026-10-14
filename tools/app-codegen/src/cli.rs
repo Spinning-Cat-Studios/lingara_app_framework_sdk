@@ -89,7 +89,7 @@ pub fn current_snapshot(registry: &Path) -> Result<(String, PathBuf), String> {
 /// libraries' `spec-codegen` restates it, because neither repo links
 /// Backend's crates. The registry's timestamps are canonical
 /// `YYYY-MM-DDTHH:MM:SSZ`, so they order as text.
-fn current_id(table: &toml::Table) -> Option<String> {
+pub(crate) fn current_id(table: &toml::Table) -> Option<String> {
     let field = |v: &toml::Value, key: &str| v.get(key).and_then(toml::Value::as_str).map(str::to_owned);
     table
         .get("version")?

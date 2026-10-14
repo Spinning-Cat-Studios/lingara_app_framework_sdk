@@ -79,6 +79,7 @@ dependencies = [
 name = "app-codegen"
 version = "0.0.0"
 dependencies = [
+ "release-manifest",
  "serde_json",
  "spec-codegen",
  "tempfile",
@@ -847,9 +848,9 @@ checksum = "ce5d3ddc6d3fa000eb1536d85e147bfe31aacaba692ed6a876f95cb7c855be78"
 
 [[package]]
 name = "lingara"
-version = "0.1.0-alpha.12"
+version = "0.2.0-alpha.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d684cad0040e9a560942a195420c13f7f9e369002655a7dc4a04d147f726cb21"
+checksum = "c8f7a3632a2d02d4876a34465a81c7a60acd429274cab6889f82fef46b04147a"
 dependencies = [
  "base64 0.22.1",
  "bytes",
@@ -872,7 +873,7 @@ dependencies = [
 
 [[package]]
 name = "lingara-apps"
-version = "0.1.0-alpha.6"
+version = "0.1.0-alpha.7"
 dependencies = [
  "axum",
  "base64 0.22.1",
@@ -1338,6 +1339,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "32eef8b209c3c1c15dbad02c1f30f9539f00dc7253e0cbcdaae442a50a09d7c1"
 dependencies = [
  "memchr",
+]
+
+[[package]]
+name = "release-manifest"
+version = "0.0.0"
+source = "git+https://github.com/Spinning-Cat-Studios/lingara_api_clients?tag=v0.1.0-alpha.13#368bd7fffab8a57e892cbc431cdd050823731aa9"
+dependencies = [
+ "serde",
+ "serde_json",
+ "toml",
+ "toml_edit",
 ]
 
 [[package]]

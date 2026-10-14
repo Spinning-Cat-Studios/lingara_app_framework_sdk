@@ -5,7 +5,9 @@
 # copied here: it is installed from the public lingara_api_clients repository
 # at a pinned tag, into .tools/ (gitignored), the first time a target needs it.
 
-RELEASE_MANIFEST_TAG := v0.1.0-alpha.10
+# Also pinned as tools/app-codegen's release-manifest dev-dependency (ADR
+# 6.10.26i D5): a bump moves both.
+RELEASE_MANIFEST_TAG := v0.1.0-alpha.13
 RELEASE_MANIFEST_REPO := https://github.com/Spinning-Cat-Studios/lingara_api_clients
 RELEASE_MANIFEST_ROOT := .tools/release-manifest-$(RELEASE_MANIFEST_TAG)
 RELEASE_MANIFEST := $(RELEASE_MANIFEST_ROOT)/bin/release-manifest

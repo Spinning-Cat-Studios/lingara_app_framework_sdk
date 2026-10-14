@@ -6,7 +6,8 @@ class GemspecTest < Minitest::Test
   GEMSPEC = File.join(KitTest::RUBY_DIR, "lingara-apps.gemspec")
 
   # 30.9.26am AC27: the gemspec has exactly one runtime dependency, the
-  # lingara library, from LIBRARY_FLOOR in RubyGems' spelling to below 0.2;
+  # lingara library, from LIBRARY_FLOOR in RubyGems' spelling to below the
+  # floor's next minor (what a caret means at 0.x in the other six kits);
   # a 3.3 floor; and require_paths and bindir left unset, so the publisher
   # reads it without running it.
   def test_the_only_runtime_dependency_is_the_library
@@ -14,8 +15,11 @@ class GemspecTest < Minitest::Test
     assert_equal "lingara-apps", spec.name
     assert_equal Lingara::Apps::GEM_VERSION, spec.version.to_s
     assert_equal ["lingara"], spec.runtime_dependencies.map(&:name)
-    floor = File.read(File.join(KitTest::ROOT, "LIBRARY_FLOOR")).strip.sub("-", ".pre.")
-    assert_equal Gem::Requirement.new(">= #{floor}", "< 0.2"), spec.runtime_dependencies.first.requirement
+    floor = File.read(File.join(KitTest::ROOT, "LIBRARY_FLOOR")).strip
+    major, minor = floor.split(".")
+    ceiling = "#{major}.#{minor.to_i + 1}"
+    expected = Gem::Requirement.new(">= #{floor.sub("-", ".pre.")}", "< #{ceiling}")
+    assert_equal expected, spec.runtime_dependencies.first.requirement
     assert_equal Gem::Requirement.new(">= 3.3"), spec.required_ruby_version
     assert_equal ["lib"], spec.require_paths
     text = File.read(GEMSPEC)

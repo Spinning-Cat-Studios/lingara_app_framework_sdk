@@ -2,4 +2,4 @@
 // Do not edit: run `make codegen-rust`.
 
 /// The app view this crate's types were generated from.
-pub const GENERATED_FOR_VERSION: &str = "2026-10-affable-towhee";
+pub const GENERATED_FOR_VERSION: &str = "2026-10-virile-dragon";

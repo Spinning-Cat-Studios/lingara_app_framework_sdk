@@ -2,9 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Lingara apps",
-    "version": "2026-10-affable-towhee",
+    "version": "2026-10-virile-dragon",
     "x-lingara-view": {
-      "source": "backend@43259e6fb944ab0c816525aee47c0598af8b9503",
+      "source": "backend@9781d04a1d3a8881e54d1210e63f555886bed518",
       "from": "asyncapi 3.0"
     }
   },
